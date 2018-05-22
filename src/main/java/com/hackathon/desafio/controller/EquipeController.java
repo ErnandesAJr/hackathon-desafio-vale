@@ -2,16 +2,17 @@ package com.hackathon.desafio.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hackathon.desafio.bean.Equipe;
-import com.hackathon.desafio.bean.Evento;
 import com.hackathon.desafio.bean.Membro;
 import com.hackathon.desafio.service.EquipeService;
 
@@ -25,8 +26,8 @@ public class EquipeController {
 
 	//salva Equipe
 	@RequestMapping(path="/salvar", method = RequestMethod.POST)
-	public ResponseEntity<Equipe> salvarEquipe(@RequestParam String nomeEquipe, @RequestParam List<Membro> membros, @RequestParam String dataDeInscricao){
-		return equipeService.salvarEquipe(nomeEquipe, membros,dataDeInscricao);
+	public ResponseEntity<Equipe> salvarEquipe(@RequestBody Equipe equipe){
+		return equipeService.salvarEquipe(equipe);
 	}
 	
 	//deleta Equipe
@@ -43,10 +44,9 @@ public class EquipeController {
 		
 	//atualizar Equipe
 	@RequestMapping(path="/atualizarEquipe/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> atualizarEquipe(@PathVariable(value = "id") Integer idEquipe,@RequestParam String nomeEquipe,
-			@RequestParam List<Membro> membros,	@RequestParam List<Evento> eventos) {
+	public ResponseEntity<?> atualizarEquipe(@RequestBody Equipe equipe) {
 
-	    return equipeService.atulizarEquipe(idEquipe, nomeEquipe, membros, eventos);	
+	    return equipeService.atulizarEquipe(equipe);	
 	}
 	
 	// adiciona um membro na Equipe

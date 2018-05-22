@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,11 +43,9 @@ public class EventoControler {
 
 	//criar Evento 
 	@RequestMapping(path="/salvar", method = RequestMethod.POST)
-	public ResponseEntity<Evento> salvarEvento(@RequestParam String nomeEvento,@RequestParam String descricaoEvento,
-			@RequestParam String localEvento,@RequestParam String dataEvento
-			,@RequestParam Integer nPartiPorEvento,@RequestParam Integer nEquipes, @RequestParam Boolean statusEvento){
+	public ResponseEntity<Evento> salvarEvento(@RequestBody Evento evento){
 
-		return eventoService.salvarEvento(nomeEvento,descricaoEvento,localEvento,dataEvento,nPartiPorEvento,nEquipes,statusEvento);
+		return eventoService.salvarEvento(evento);
 
 
 	}
@@ -81,11 +80,9 @@ public class EventoControler {
 	// Organizador --->  gostaria de encerrar as inscrições de uma
 	// 					hackathon a qual organizo; Alterar o Status
 	@RequestMapping(path="/atualizarEvento/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Evento> atualizarEvento(@PathVariable(value = "id") Integer eventoId,@RequestParam String nomeEvento,@RequestParam String descricaoEvento,
-			@RequestParam String localEvento,@RequestParam String dataEvento
-			,@RequestParam Integer nPartiPorEvento,@RequestParam Integer nEquipesEvento,@RequestParam Boolean statusEvento) {
+	public ResponseEntity<Evento> atualizarEvento(@RequestBody Evento evento) {
 
-		return eventoService.atulizarEvento(eventoId, nomeEvento, descricaoEvento, dataEvento, localEvento, nPartiPorEvento, nEquipesEvento,statusEvento);
+		return eventoService.atulizarEvento(evento);
 	}
 
 	// Alterar o Status do Evento ... Aberto ( 1 ) ou Fechado ( 0 )

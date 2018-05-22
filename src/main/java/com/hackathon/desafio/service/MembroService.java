@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.hackathon.desafio.bean.Equipe;
 import com.hackathon.desafio.bean.Membro;
 import com.hackathon.desafio.repositorio.MembroRepositorio;
 
@@ -18,10 +17,9 @@ public class MembroService {
 	MembroRepositorio  membroRepo;
 
 	//salva membro -- cada equipe so pode ter um membro daquele
-	public ResponseEntity<Membro> salvarMembro(String nomeCompletoMembro, String emailMembro,
-			String telefoneMembro, String tamCamisaMembro){
+	public ResponseEntity<Membro> salvarMembro(Membro membro){
 
-		Membro membro = new Membro();
+//		Membro membro = new Membro();
 		//boolean seEquipetemEsseMembro = false;
 
 		//verifica se o membro ja esta na Equipe
@@ -33,11 +31,11 @@ public class MembroService {
 
 		//		if(seEquipetemEsseMembro == false) {
 		//
-		membro.setEmailMembro(emailMembro);
+//		membro.setEmailMembro(emailMembro);
 		//			membro.setEquipe(equipe);
-		membro.setNomeCompletoMembro(nomeCompletoMembro);
-		membro.setTelefoneMembro(telefoneMembro);
-		membro.setTamCamisaMembro(tamCamisaMembro);
+//		membro.setNomeCompletoMembro(nomeCompletoMembro);
+//		membro.setTelefoneMembro(telefoneMembro);
+//		membro.setTamCamisaMembro(tamCamisaMembro);
 		//			return true;
 		//		}
 
@@ -60,16 +58,15 @@ public class MembroService {
 	
 	
 	//atulizar Membro 
-	public ResponseEntity<Membro> atulizarMembro(Integer idMembro,String nomeCompletoMembro,String emailMembro,String telefoneMembro ,
-			String tamCamisaMembro,Equipe equipe) {
-		Membro membro = membroRepo.findById(idMembro).get();
-		//	            .orElseThrow(() -> new ResourceNotFoundException("Membro", "idMembro", idMembro));
-
-		membro.setEmailMembro(emailMembro);
-		membro.setEquipe(equipe);
-		membro.setNomeCompletoMembro(nomeCompletoMembro);
-		membro.setTamCamisaMembro(tamCamisaMembro);
-		membro.setTelefoneMembro(telefoneMembro);
+	public ResponseEntity<Membro> atulizarMembro(Membro membro) {
+//		Membro membro = membroRepo.findById(idMembro).get();
+//		//	            .orElseThrow(() -> new ResourceNotFoundException("Membro", "idMembro", idMembro));
+//
+//		membro.setEmailMembro(emailMembro);
+//		membro.setEquipe(equipe);
+//		membro.setNomeCompletoMembro(nomeCompletoMembro);
+//		membro.setTamCamisaMembro(tamCamisaMembro);
+//		membro.setTelefoneMembro(telefoneMembro);
 
 
 		return new ResponseEntity<Membro>(membroRepo.save(membro), HttpStatus.OK);

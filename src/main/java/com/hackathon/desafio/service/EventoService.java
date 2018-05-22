@@ -31,18 +31,17 @@ public class EventoService {
 	MembroRepositorio  membroRepo;
 	
 	// crio o Evento sem Equipe e depois adiciono Equipes ao Evento
-	public ResponseEntity<Evento> salvarEvento(String nomeEvento, String descricaoEvento,String localEvento,
-			String dataEvento,Integer nPartiPorEvento,Integer nEquipes, Boolean statusEvento){
+	public ResponseEntity<Evento> salvarEvento(Evento evento){
 
-		Evento evento = new Evento();
-
-		evento.setNomeEvento(nomeEvento);
-		evento.setDescricaoEvento(descricaoEvento);
-		evento.setLocalEvento(localEvento);
-		evento.setDataEvento(dataEvento);
-		evento.setnPartiPorEvento(nPartiPorEvento);
-		evento.setnEquipesEvento(nEquipes);
-		evento.setStatusEvento(statusEvento);
+//		Evento evento = new Evento();
+//
+//		evento.setNomeEvento(nomeEvento);
+//		evento.setDescricaoEvento(descricaoEvento);
+//		evento.setLocalEvento(localEvento);
+//		evento.setDataEvento(dataEvento);
+//		evento.setnPartiPorEvento(nPartiPorEvento);
+//		evento.setnEquipesEvento(nEquipes);
+//		evento.setStatusEvento(statusEvento);
 
 		return new ResponseEntity<Evento>(eventoRepo.save(evento), HttpStatus.OK);
 		
@@ -160,16 +159,7 @@ public class EventoService {
 	}
 
 	// atualiza o Evento // 
-	public ResponseEntity<Evento> atulizarEvento(Integer idEvento,String nomeEvento,String descricao,String dataEvento,String localEvento
-			,Integer nPartiPorEvento,Integer nEquipeEvento, Boolean statusEvento) {
-		Evento evento = eventoRepo.findById(idEvento).get();
-		//	            .orElseThrow(() -> new ResourceNotFoundException("Evento", "idEvento", idEvento));
-		evento.setDescricaoEvento(descricao);
-		evento.setDataEvento(dataEvento);
-		evento.setnEquipesEvento(nEquipeEvento);
-		evento.setnPartiPorEvento(nPartiPorEvento);
-		evento.setLocalEvento(localEvento);
-		evento.setStatusEvento(statusEvento);
+	public ResponseEntity<Evento> atulizarEvento(Evento evento) {
 
 		return new ResponseEntity<Evento>(eventoRepo.save(evento), HttpStatus.OK);
 }

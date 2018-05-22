@@ -1,6 +1,7 @@
 package com.hackathon.desafio.service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.hackathon.desafio.bean.Equipe;
-import com.hackathon.desafio.bean.Evento;
 import com.hackathon.desafio.bean.Membro;
 import com.hackathon.desafio.repositorio.EquipeRepositorio;
 import com.hackathon.desafio.repositorio.MembroRepositorio;
@@ -19,19 +19,13 @@ public class EquipeService {
 
 	@Autowired
 	EquipeRepositorio  equipeRepo;
-	
+
 	@Autowired
 	MembroRepositorio  membroRepo;
-	
-	// posso criar uma equipe sem Evento , para que eu possa escrever essa equipe em varios Eventos diferentes
-	public ResponseEntity<Equipe> salvarEquipe(String nomeEquipe,List<Membro> membros,String dataDeInscricao){
-		Equipe equipe = new Equipe();
 
-		equipe.setNomeEquipe(nomeEquipe);;
-		equipe.setMembros(membros);
-		equipe.setDataDeInscrição(dataDeInscricao);
-		equipeRepo.save(equipe);
-		
+	// posso criar uma equipe sem Evento , para que eu possa escrever essa equipe em varios Eventos diferentes
+	public ResponseEntity<Equipe> salvarEquipe(Equipe equipe){
+
 		return new ResponseEntity<Equipe>(equipeRepo.save(equipe), HttpStatus.OK);
 	}
 
@@ -42,11 +36,10 @@ public class EquipeService {
 
 	//pegar todas as equipe que nao tem Eventos
 	public ResponseEntity<List<Equipe>> getEquipeSemEvento(){
-		
 		return new ResponseEntity<List<Equipe>>(new ArrayList<Equipe>(this.equipeRepo.buscarEquipeSemEvento()), HttpStatus.OK);
-		
+
 	}
-	
+
 
 	//deletar uma equipe	
 	public ResponseEntity<Boolean> deleteEquipe(Integer idEquipe) {
@@ -59,13 +52,13 @@ public class EquipeService {
 	}
 
 	//atualizar Equipe
-	public ResponseEntity<?> atulizarEquipe(Integer idEquipe,String nomeEquipe,List<Membro> membros,List<Evento> eventos) {
-		Equipe equipe = equipeRepo.findById(idEquipe).get();
-		//	            .orElseThrow(() -> new ResourceNotFoundException("Evento", "idEvento", idEvento));
-
-		equipe.setEventos(eventos);
-		equipe.setMembros(membros);
-		equipe.setNomeEquipe(nomeEquipe);
+	public ResponseEntity<?> atulizarEquipe(Equipe equipe) {
+		//		Equipe equipe = equipeRepo.findById(idEquipe).get();
+		//		//	            .orElseThrow(() -> new ResourceNotFoundException("Evento", "idEvento", idEvento));
+		//
+		//		equipe.setEventos(eventos);
+		//		equipe.setMembros(membros);
+		//		equipe.setNomeEquipe(nomeEquipe);
 
 		return new ResponseEntity<Equipe>(equipeRepo.save(equipe), HttpStatus.OK);
 	}
@@ -77,7 +70,7 @@ public class EquipeService {
 		Equipe equipe = equipeRepo.findById(idEquipe).get();
 		Membro membro = membroRepo.findById(idMembro).get();
 
-		
+
 		// verifica se a Membro ja esta no Equipe
 		for(Membro m:equipe.getMembros()) {
 
@@ -97,25 +90,25 @@ public class EquipeService {
 		//return "Membro já está na Equipe";
 		return new ResponseEntity<Boolean>((false), HttpStatus.OK);
 	}
-	
+
 	// deletar Membro do Equipe
 	public ResponseEntity<Boolean>  delMembroDoEquipe(Integer idMembro, Integer idEquipe){
-		
+
 		Membro membro = membroRepo.findById(idMembro).get();
 		Equipe equipe = equipeRepo.findById(idEquipe).get();
-		
+
 		equipe.getMembros().remove(membro);
 		membro.setEquipe(null);
 		//
 		membroRepo.delete(membro);
 		equipeRepo.save(equipe);
-		
+
 		return new ResponseEntity<Boolean>((true), HttpStatus.OK);
 	}
 	// listar todos os membros dessa equipe
 	public ResponseEntity<List<Membro>> getTodasMembroEquipe(Integer idEquipe){
 		Equipe equipe = equipeRepo.findById(idEquipe).get();
-	
+
 		return new ResponseEntity<List<Membro>>(new ArrayList<Membro>(equipe.getMembros()), HttpStatus.OK);
 	}
 
